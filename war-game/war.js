@@ -34,6 +34,7 @@ class Card {
 //or is player just a type of deck hmm... the only differnce is that player can only have half of the deck. but if you randomize the ray and assign half the length ... hmmm two players need to access the same instance of the deck 
 class Player {
     constructor (cards = []) { 
+        this.length = 26
         this.cards = cards
     }
 }
@@ -42,7 +43,7 @@ class Player {
 class Deck {
     constructor(cards = []) {
        this.length = 52
-       this.cards = cards
+       this.cards = this.deckGenerator();
     }
     draw() {
          return Math.floor(Math.random() * this.length);
@@ -63,15 +64,30 @@ class Deck {
             }
         return deck
     }
+
+
+//need to make a deal function 
+
+function deal(player1, player2) {
+    let player1 = []
+    let player2 = []
+    player1.length = 26;
+    player2.length = 26; 
+    let freshDeck = new Deck();
+    freshDeck.deckGenerator(
+}
 //try using slice to move elements from main deck to player deck 
 
 //create 2 functions: play round and play game. play round is a single instance , play game is the play to completition 
-let deck = new Deck();
-deckGenerator(deck);
+let roundDeck = new Deck();
+deckGenerator(roundDeck);
+console.log(roundDeck);
+let player1 = new Player();
+let player2 = new Player();
 let p1 = new Deck();
 deckGenerator(p1);
 //console.log(p1);
 p1.draw();
 console.log(p1.draw());
 
-
+// you will need to create a third array within the game to store cards in toie breaker situation 
