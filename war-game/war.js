@@ -1,4 +1,5 @@
 //card
+
 class Card {
     constructor(suit, score) {
         this.suit = suit
@@ -49,45 +50,133 @@ class Deck {
          return Math.floor(Math.random() * this.length);
     }
 
-}
-   function  deckGenerator(deck) {
+    deckGenerator() {
 
-        Deck.cards = []
+        let cards = []
         let suits = ['hearts', 'spades', 'clubs','diamonds']
         let scores = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-            for (i = 0; i < suits.length; i++) {
-                for (j = 0; j < scores.length; j++) {
+            for (let i = 0; i < suits.length; i++) {
+                for (let j = 0; j < scores.length; j++) {
                     let newCard = new Card(suits[i], scores[j])
                     newCard.rankToScore();
-                    deck.cards.push(newCard)
+                    cards.push(newCard)
                 }
             }
-        return deck
+    
+
+    function shuffle(cards) { 
+         let currentIndex = cards.length, randomIndex; 
+         while (currentIndex != 0) { 
+              randomIndex = Math.floor(Math.random() * currentIndex); 
+              currentIndex--;
+             [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
+          }
+        }
+
+    shuffle(cards); 
+
+    return cards;
+   }
+}
+
+let newDeck = new Deck();
+let player1 = [];
+let player2 = [];
+
+function deal() {
+  for (let i = 0; i < 26; i++) {
+    player1.push(newDeck.cards[i])
+  }
+  for (let j = 26; j < 52; j++) {
+    player2.push(newDeck.cards[j])
+  }
+}
+
+deal();
+
+function goToWar() {
+  
+
+  //play one round 
+  while ((player1.length < 52) && (player2.length < 52)) {
+   
+    function playRound() {
+      if (player1[0].score > player2[0].score) {
+        console.log("Player 1 wins this battle with a " + player1[0].score + "of " + player1[0].suit + ". Player 2 played a " + player2[0].score + " of " + player2[0].suit);
+        player1.push(player1[0])
+        player1.shift()
+        player2.push(player2[0])
+        player2.shift()
+        console.log("Player  1 added to his bag to net " + player1.length + "cards. Player 2 has " + player2.length + " cards")
+        return
+      }
+      if (player1[0].score < player2[0].score) {
+        console.log("Player w wins this battle with a " + player2[0].score + "of " + player2[0].suit + ". Player 1 played a " + player1[0].score + " of " + player1[0].suit);
+        player2.push(player1[0])
+        player2.shift()
+        player2.push(player2[0])
+        player2.shift()
+        console.log("Player 2 added to his bag to net " + player1.length + "cards. Player 2 has " + player2.length + " cards")
+        return
+      }
+      if (player1[0].score === player2[0].score) {
+        let duelCards = []
+        
+        while (player1[0].score === player2[0].score) {
+          console.log("ooohhhhhhh snappppppp! It's a tie!!!! grrrrrrah! Player 1 card: " + player1[0].score + " of " + player1[0].suit + " Player 2 card: " + player2[0].score + " of " + player2[0].suit);
+          duelCards.push(player1[0], player1[1], player1[2], player1[3], player2[0], player2[1], player2[2], player2[3]);
+          player1.splice(0, 4)
+          player2.splice(0, 4)
+        }
+        if (player1[0].score > player2[0].score) {
+          console.log("Player 1 wins this battle with a " + player1[0].score + "of " + player1[0].suit + ". Player 2 played a " + player2[0].score + " of " + player2[0].suit);
+          player1.push(player1[0])
+          player1.shift()
+          player2.push(player2[0])
+          player2.shift()
+          for (let i = 0; i < duelCards.length; i++) {
+            player1.push(duelCards[i]);
+            duelCards.shift();
+          }
+          console.log("Player  1 added to his bag to net " + player1.length + "cards. Player 2 has " + player2.length + " cards")
+          return
+        }
+        if (player1[0].score < player2[0].score) {
+          console.log("Player w wins this battle with a " + player2[0].score + "of " + player2[0].suit + ". Player 1 played a " + player1[0].score + " of " + player1[0].suit);
+          player2.push(player1[0])
+          player2.shift()
+          player2.push(player2[0])
+          player2.shift()
+          for (let i = 0; i < duelCards.length; i++) {
+            player2.push(duelCards[i]);
+            duelCards.shift();
+          }
+          console.log("Player 2 added to his bag to net " + player1.length + "cards. Player 2 has " + player2.length + " cards")
+          return
+        }
+
+      }
     }
 
-
-//need to make a deal function 
-
-function deal(player1, player2) {
-    let player1 = []
-    let player2 = []
-    player1.length = 26;
-    player2.length = 26; 
-    let freshDeck = new Deck();
-    freshDeck.deckGenerator(
+    playRound();
+  }
+  if (player1.length === 52) {
+    console.log("player 1 with the dub, family")
+  }
+  if (player2.length === 52) {
+    console.log("player 2 with the dub, family")
+  }
 }
+  console.log("hey")
+goToWar();
+  
+
+
+
+
+
 //try using slice to move elements from main deck to player deck 
 
 //create 2 functions: play round and play game. play round is a single instance , play game is the play to completition 
-let roundDeck = new Deck();
-deckGenerator(roundDeck);
-console.log(roundDeck);
-let player1 = new Player();
-let player2 = new Player();
-let p1 = new Deck();
-deckGenerator(p1);
-//console.log(p1);
-p1.draw();
-console.log(p1.draw());
 
 // you will need to create a third array within the game to store cards in toie breaker situation 
