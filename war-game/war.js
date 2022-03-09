@@ -1,5 +1,4 @@
 //card
-console.log("is this connected to html?")
 
 class Card {
     constructor(suit, score) {
@@ -87,7 +86,11 @@ let player2 = [];
 function deal() {
   for (let i = 0; i < 26; i++) {
     player1.push(newDeck.cards[i])
+// console.log(player1.length)
+  //  console.log(player1.cards)
   }
+  console.log(player1.length)
+   // console.log(player1.cards)
   for (let j = 26; j < 52; j++) {
     player2.push(newDeck.cards[j])
   }
@@ -96,7 +99,7 @@ function deal() {
 deal();
 
 function goToWar() {
- console.log(newDeck)
+// console.log(newDeck)
 
   //while loop to keep game going until a player has all 52 cards 
   while ((player1.length < 52) && (player2.length < 52)) {
@@ -108,7 +111,7 @@ function goToWar() {
         console.log("Player 1 wins this battle with a " + player1[0].score + " of " + player1[0].suit + ". Player 2 played a " + player2[0].score + " of " + player2[0].suit);
         player1.push(player1[0])
         player1.shift()
-        player2.push(player2[0])
+        player1.push(player2[0])
         player2.shift()
         console.log("Player 1 added to their bag to net " + player1.length + " cards. Player 2 has " + player2.length + " cards")
         return
@@ -118,8 +121,8 @@ function goToWar() {
         player2.push(player1[0])
         player2.shift()
         player2.push(player2[0])
-        player2.shift()
-        console.log("Player 2 added to their bag to net " + player1.length + "cards. Player 2 has " + player2.length + " cards")
+        player1.shift()
+        console.log("Player 2 added to their bag to net " + player1.length + " cards. Player 2 has " + player2.length + " cards")
         return
       }
         //if tie
@@ -132,51 +135,53 @@ function goToWar() {
 
         function lilShuffle(duelCards) {
           let currentIndex = duelCards.length, randomIndex;
+
           while (currentIndex != 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
-            [duelCards[currentIndex], duelCards[randomIndex]] = [duelCards[randomIndex], duelCards[currentIndex]]
+            [duelCards[currentIndex], duelCards[randomIndex]] = [duelCards[randomIndex], duelCards[currentIndex]];
           }
         }
+
         while (player1[0].score === player2[0].score) {
           
           console.log("ooohhhhhhh snappppppp! It's a tie!!!! grrrrrrah! Player 1 card: " + player1[0].score + " of " + player1[0].suit + " Player 2 card: " + player2[0].score + " of " + player2[0].suit);
           
-          function tieBreaker() { 
-            if (player1.length > 4 && player2.length > 4) { 
+        function tieBreaker() { 
+          if (player1.length > 4 && player2.length > 4) { 
           duelCards.push(player1[0], player1[1], player1[2], player1[3], player2[0], player2[1], player2[2], player2[3]);
           lilShuffle(duelCards);
           player1.splice(0, 4)
           player2.splice(0, 4)
             return
         }
-        if (player1.length === 4 || player2.length === 4) { 
+          if (player1.length === 4 || player2.length === 4) { 
             duelCards.push(player1[0], player1[1], player1[2], player2[0], player2[1], player2[2]);
             lilShuffle(duelCards);    
             player1.splice(0, 3) 
             player2.splice(0, 3) 
                 return 
         }
-        if (player1.length === 3 || player2.length === 3) { 
+          if (player1.length === 3 || player2.length === 3) { 
             duelCards.push(player1[0], player1[1], player2[0], player2[1]);
-            lilShuffle(duelCards);
-            player1.splice(0, 3) 
-            player2.splice(0, 3) 
-                return 
-        }
-        if (player2.length === 2 || player2.length === 2) { 
-            duelCards.push(player1[0], player2[0]);
             lilShuffle(duelCards);
             player1.splice(0, 2) 
             player2.splice(0, 2) 
                 return 
         }
-        if (player1.length === 1) { 
+          if (player1.length === 2 || player2.length === 2) { 
+            duelCards.push(player1[0], player2[0]);
+            lilShuffle(duelCards);
+            player1.splice(0, 1) 
+            player2.splice(0, 1) 
+                return 
+        }
+         if (player1.length === 1) { 
             duelCards.push(player2[0])
             player2.shift()
             return 
         }
-        if (player2.length === 1)
+         if (player2.length === 1) {
             duelCards.push(player1[0])
             player1.shift()
             return
@@ -187,10 +192,8 @@ function goToWar() {
         if (player1[0].score > player2[0].score) {
           console.log("Player 1 wins this battle with a " + player1[0].score + " of " + player1[0].suit + ". Player 2 played a " + player2[0].score + " of " + player2[0].suit);
           duelCards.push(player1[0])  
-         // player1.push(player1[0])
           player1.shift()
           duelCards.push(player2[0])
-         // player2.push(player2[0])
           player2.shift()
           lilShuffle(duelCards)  
           while (duelCards.length > 0) {
@@ -214,10 +217,12 @@ function goToWar() {
             console.log("Player 2 added to their bag to net " + player1.length + " cards. Player 2 has " + player2.length + " cards")
             return
         }
-      }
+    }
+  
     }
 
-  playRound();
+playRound();
+  }
   console.log(playRound)
   if (player1.length === 52) {
     console.log("player 1 with the dub, family")
@@ -225,9 +230,8 @@ function goToWar() {
   if (player2.length === 52) {
     console.log("player 2 with the dub, family")
   }
-
 }
+
 goToWar();
-console.log(goToWar);
-console.log("hey");
+//console.log(goToWar);
   
